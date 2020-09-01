@@ -27,16 +27,16 @@ function Empty() {
 
 const GET_POSTS = gql` 
 query GetPosts {
-    posts {
-      body
-      createdAt
-      id
-      title
-    }
+    posts(order_by: {createdAt: desc}) {
+        body
+        createdAt
+        id
+        title
+      }
   }`
 
 function App() {
-    const { loading, data } = useQuery(GET_POSTS, { fetchPolicy: 'network-only' });
+    const { loading, data, refetch } = useQuery(GET_POSTS, { fetchPolicy: 'network-only' });
 
     if (loading) return <div>Loading ...</div>;
 
@@ -50,7 +50,7 @@ function App() {
             </header>
             {data.posts.length === 0 && <Empty />}
             {data.posts.map(post => (
-                <Post ley={post.id} post={post} />
+                <Post ley={post.id} post={post} refetch={refetch} />
             ))}
         </>
     );

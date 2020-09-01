@@ -12,7 +12,7 @@ const classes = {
     error: "font-bold text-red-500"
 };
 
-function PostForm({ onSave, post }) {
+function PostForm({ onSave, post, loading, error }) {
     const [title, setTitle] = React.useState(post?.title);
     const [body, setBody] = React.useState(post?.body);
 
@@ -45,10 +45,9 @@ function PostForm({ onSave, post }) {
                     />
                 </div>
                 <div>
-                    <button className={classes.button} type="submit">
-                        Submit
-          </button>
+                    <button disabled={loading} className={classes.button} type="submit">Submit</button>
                 </div>
+                {error && <p className={classes.error}>{error.message}</p>}
             </form>
         </div>
     );

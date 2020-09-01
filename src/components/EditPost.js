@@ -36,10 +36,10 @@ function EditPost() {
     const { id } = useParams();
     const history = useHistory();
 
-    const [updatePost] = useMutation(UPDATE_POST, {
+    const [updatePost, { loading: UpdateLoading, error }] = useMutation(UPDATE_POST, {
         onCompleted: () => history.push('/')
     });
-    
+
     const { loading, data } = useQuery(GET_POST_BY_ID, { variables: { id } });
 
     if (loading) return <div>Loading ...</div>;
@@ -59,7 +59,7 @@ function EditPost() {
             <header className={classes.header}>
                 <h2 className={classes.h2}>Edit Post</h2>
             </header>
-            <PostForm post={data.posts_by_pk} onSave={onSave} />
+            <PostForm post={data.posts_by_pk} onSave={onSave} loading={UpdateLoading} error={error} />
         </div>
     );
 }
